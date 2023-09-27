@@ -11,14 +11,16 @@ fun Application.configureRouting() {
     routing {
         route("/live") {
             get {
-                call.respond(HttpStatusCode.OK, headersOf("ActiveImage-URL", activeImage))
+                call.response.status(HttpStatusCode.OK)
+                call.response.headers.append("ActiveImage-URL", activeImage)
+                call.respond("")
             }
 
             post {
                 val newImageUrl = call.receiveText()
                 val headerValue = call.request.headers["ActiveImage-URL"]
                 activeImage = if (!headerValue.isNullOrBlank()) headerValue else newImageUrl
-                call.respond(HttpStatusCode.OK)
+                call.respondText("Active Image Updated!", status = HttpStatusCode.OK)
             }
         }
     }
