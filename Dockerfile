@@ -2,7 +2,7 @@ FROM gradle:latest as builder
 
 WORKDIR /app
 
-COPY build.gradle settings.gradle /app/
+COPY build.gradle.kts settings.gradle.kts /app/
 COPY gradle /app/gradle
 COPY gradlew /app/
 COPY gradlew.bat /app/
