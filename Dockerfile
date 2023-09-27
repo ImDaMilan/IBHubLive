@@ -1,17 +1,20 @@
 FROM gradle:latest as builder
 
-WORKDIR /
+WORKDIR /app
 
-COPY build.gradle settings.gradle /
+COPY build.gradle settings.gradle /app/
+COPY gradle /app/gradle
+COPY gradlew /app/
+COPY gradlew.bat /app/
 
-COPY src /src
+COPY src /app/src
 
-RUN gradle build
+RUN ./gradlew build
 
 FROM openjdk:latest
 
 WORKDIR /app
 
-COPY --from=builder /build/libs/IBHubLive-0.0.1.jar .
+COPY --from=builder /app/build/libs/IBHubLive-0.0.1.jar .
 
 ENTRYPOINT ["java", "-jar", "IBHubLive-0.0.1.jar"]
