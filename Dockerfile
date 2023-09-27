@@ -11,12 +11,12 @@ RUN chmod +x ./gradlew
 
 COPY src /app/src
 
-RUN ./gradlew build
+RUN ./gradlew clean build
 
 FROM openjdk:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/build/libs/IBHubLive-0.0.1.jar .
+COPY --from=builder /app/build/libs/IBHubLive-all.jar .
 
-ENTRYPOINT ["java", "-jar", "IBHubLive-0.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "IBHubLive-all.jar"]
